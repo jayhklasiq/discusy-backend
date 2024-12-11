@@ -1,0 +1,90 @@
+### Test MongoDB Connection
+GET http://localhost:5000/posts
+Accept: application/json
+
+### User Registration
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### User Login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Create a New Post (Protected)
+POST http://localhost:5000/posts/create
+Authorization: Bearer <your_access_token_here>
+Content-Type: application/json
+
+{
+  "title": "My First Post",
+  "content": "This is the content of my first post."
+}
+
+### Refresh Access Token
+POST http://localhost:5000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "<your_refresh_token_here>"
+}
+
+### Create a New Post with New Access Token (Protected)
+POST http://localhost:5000/posts/create
+Authorization: Bearer <new_access_token_here>
+Content-Type: application/json
+
+{
+  "title": "My Second Post",
+  "content": "This is the content of my second post."
+}
+
+### Fetch All Posts
+GET http://localhost:5000/posts/
+Authorization: Bearer <new_access_token_here>
+
+### Update User Profile (Protected)
+PUT http://localhost:5000/users/update
+Authorization: Bearer <your_access_token_here>
+Content-Type: application/json
+
+{
+    "username": "UpdatedTestUser",
+    "email": "updated@example.com"
+}
+
+### Update User Password (Protected)
+PUT http://localhost:5000/users/update
+Authorization: Bearer <your_access_token_here>
+Content-Type: application/json
+
+{
+    "password": "newpassword123"
+}
+
+### Update User with Invalid Field (Should Fail)
+PUT http://localhost:5000/users/update
+Authorization: Bearer <your_access_token_here>
+Content-Type: application/json
+
+{
+    "invalidField": "someValue"
+}
+
+### Delete User Account (Protected)
+DELETE http://localhost:5000/users/delete
+Authorization: Bearer <your_access_token_here>
+
+### Test Access After Delete (Should Fail)
+GET http://localhost:5000/users/me
+Authorization: Bearer <your_access_token_here>

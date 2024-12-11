@@ -1,0 +1,28 @@
+{
+  "name": "discusy",
+  "version": "1.0.0",
+  "description": "Discusy is a collaborative discussion platform designed to foster student engagement, streamline communication, and enhance the sharing of ideas across academic or professional groups. Build as a Sigle Page Application (SPA) using the MEAN stack, Discucy enables users to create, view, update, and delete discussion threads seamlessly.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "collaboration",
+    "discusy",
+    "angular",
+    "project",
+    "node"
+  ],
+  "author": "Joshua O. Olaoye",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.4",
+    "nodemon": "^3.1.7"
+  }
+}
