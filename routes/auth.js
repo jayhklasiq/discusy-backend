@@ -4,6 +4,20 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const router = express.Router();
 
+// Middleware to check if user is logged in
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.redirect('/posts');
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.redirect('/posts');
+    req.user = user;
+    next();
+  });
+};
+
 // POST /auth/register
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -53,8 +67,6 @@ router.post('/refresh', async (req, res) => {
   });
 });
 
-module.exports = router;
-
 // POST /auth/logout
 router.post('/logout', async (req, res) => {
   const { refreshToken } = req.body;
@@ -69,3 +81,8 @@ router.post('/logout', async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+
+// Apply the middleware to routes that need protection
+router.use(authenticateToken);
+
+module.exports = router;

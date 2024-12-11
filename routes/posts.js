@@ -3,10 +3,10 @@ const Post = require('../models/Post');
 const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-// GET /posts: Fetch all posts
-router.get('/', async (req, res) => {
+// GET /posts: Fetch all posts that belong to the user
+router.get('/', authMiddleware, async (req, res) => {
   try {
-    const posts = await Post.find().populate('author', 'name email');
+    const posts = await Post.find({ author: req.user.id }).populate('author', 'name email');
     res.send(posts);
   } catch (error) {
     res.status(500).send({ error: error.message });
@@ -26,7 +26,7 @@ router.post('/create', authMiddleware, async (req, res) => {
 });
 
 // PUT /posts/:id: Update a post (protected)
-router.put('update/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   const { title, content } = req.body;
   try {
     const post = await Post.findByIdAndUpdate(req.params.id, { title, content }, { new: true });
