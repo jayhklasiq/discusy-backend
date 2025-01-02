@@ -1,0 +1,18 @@
+# Update user account
+PUT http://localhost:5000/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjgzZmUzODhkNTk0ZjRmNzZlOWU0MiIsImlhdCI6MTczNDg4NjY0OCwiZXhwIjoxNzM0OTczMDQ4fQ.CcDWUX6G-XVtrJHRtUpcMlCWe-zaB-xpv8jHX-MfuTs
+
+{
+  "username": "newUsername",
+  "email": "newEmail@example.com",
+  "password": "newPassword"
+}
+
+### Delete user account
+DELETE http://localhost:3000/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjgzZmUzODhkNTk0ZjRmNzZlOWU0MiIsImlhdCI6MTczNDg4NjY0OCwiZXhwIjoxNzM0OTczMDQ4fQ.CcDWUX6G-XVtrJHRtUpcMlCWe-zaB-xpv8jHX-MfuTs
+
+###Get user data
+GET http://localhost:3000/<user_id>
+Authorization: Bearer <your_token>

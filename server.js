@@ -10,12 +10,12 @@ const app = express();
 connectDB();
 
 // Configure CORS
-app.use(cors({
-  origin: 'http://localhost:4200',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:4200',
+//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+//   credentials: true
+// }));
 
 // Middleware
 app.use(express.json());

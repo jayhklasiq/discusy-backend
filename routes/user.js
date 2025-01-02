@@ -1,6 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const User = require('../models/User');
+const User = require('../models/users');
 
 const router = express.Router();
 
@@ -15,7 +15,10 @@ router.put('/update', auth, async (req, res) => {
       return res.status(400).json({ message: 'Invalid updates!' });
     }
 
-    const user = await User.findById(req.user._id);
+    const user = await User.findOne({ email: req.user.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
     updates.forEach(update => user[update] = req.body[update]);
     await user.save();
 
@@ -25,11 +28,27 @@ router.put('/update', auth, async (req, res) => {
   }
 });
 
-// DELETE route to delete user account
-router.delete('/delete', auth, async (req, res) => {
+// DELETE route to delete user account by email
+router.delete('/delete/:email', auth, async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.user._id);
+    const user = await User.findOneAndDelete({ email: req.params.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
     res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET route to load user data by email
+router.get('/email', auth, async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

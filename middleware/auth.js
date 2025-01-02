@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/users');
 
 const authMiddleware = async (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
-  
+
   // Check if the user is already logged in (token exists)
   if (token) {
     try {

@@ -1,14 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const User = require('../models/users');
 const router = express.Router();
 
 // Middleware to check if user is logged in
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  
+
   if (!token) return res.redirect('/posts');
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -20,9 +20,9 @@ const authenticateToken = (req, res, next) => {
 
 // POST /auth/register
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, userType } = req.body;
   try {
-    const user = new User({ name, email, password });
+    const user = new User({ name, email, password, userType });
     await user.save();
     res.status(201).send({ message: 'User created successfully' });
   } catch (error) {
@@ -47,6 +47,7 @@ router.post('/login', async (req, res) => {
 
     res.send({ accessToken, refreshToken });
   } catch (error) {
+    console.error('Login error:', error); // Log the error
     res.status(500).send({ error: error.message });
   }
 });

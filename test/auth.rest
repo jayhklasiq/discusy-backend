@@ -1,0 +1,37 @@
+# Register a new user
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Taylor",
+  "email": "taylor.john@example.com",
+  "password": "password123",
+  "userType": "facilitator"
+}
+
+### Login a user
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+
+### Refresh token
+POST http://localhost:5000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "your_refresh_token_here"
+}
+
+
+### Logout a user
+POST http://localhost:5000/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjgzZmUzODhkNTk0ZjRmNzZlOWU0MiIsImlhdCI6MTczNDg4NTM2OSwiZXhwIjoxNzM0OTcxNzY5fQ.NZ3wo9exmVph_zokiwyQiGwKgbTOKZRhjwIyBysICgs"
+}
